@@ -1,0 +1,5 @@
+alembic
+python-dotenv
+psycopg2
+loguru
+asyncpg
