@@ -172,6 +172,17 @@ def get_genres():
                 entries.append(entry)
     return entries
 
+def get_pcompanies():
+    df = pd.read_csv('src/movies/data/tmdb_5000_movies.csv')
+    p_companies = list(df['production_companies'])  # list[str]
+    entries = []
+    for p_company in p_companies:
+        dicts = json.loads(p_company)
+        for d in dicts:
+            entry = P_companies(company_id=d['id'], name=d['name'])
+            if entry not in entries:
+                entries.append(entry)
+    return entries
 
 def get_movie_genres(filename) -> set[MovieGenre]:
     df = pd.read_csv(filename)
@@ -213,6 +224,19 @@ def get_movie_pcountries(filename):
 
     return entries
 
+def get_movie_companies(filename) -> set[Movie_companies]:
+    df = pd.read_csv(filename)
+    df_sub = df.loc[:, ['id', 'production_companies']]  # wycinek tabel
+    df_as_dict = df_sub.to_dict(orient='records')
+    entries = set()
+    for movie in df_as_dict:
+        companies = json.loads(movie.get('production_companies'))
+        for company in companies:
+            entry = Movie_companies(movie_id=movie.get('id'), company_id=company['id'])
+            entries.add(entry)
+
+    return entries
+
 
 if __name__ == '__main__':
     # df = pd.read_csv('data/tmdb_5000_credits.csv')
@@ -222,4 +246,4 @@ if __name__ == '__main__':
     # check_unique_crew_creditid(crews_)
     # check_assignment_actor_actorid(casts_)
     # find_duplicates_crew(crews_)
-    print(len(get_movie_pcountries('data/tmdb_5000_movies.csv')))
+    print(get_pcompanies())

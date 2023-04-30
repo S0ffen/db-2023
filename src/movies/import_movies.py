@@ -11,13 +11,13 @@ import json
 from db_class import DbService
 
 from model import Movie
-from src.movies.analysis_tools import get_movies
+from analysis_tools import get_movies
 
 
 async def main():
     db = DbService()
     await db.initialize()  # tu łączymy się z bazą danych
-    movies = get_movies('data/tmdb_5000_movies.csv')
+    movies = get_movies('src/movies/data/tmdb_5000_movies.csv')
     print(f'all movies: {len(movies)}')
 
     for i, movie in enumerate(movies):

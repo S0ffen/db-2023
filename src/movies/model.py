@@ -73,3 +73,14 @@ class PCountry:
 class MoviePCountry:
     movie_id: int
     iso_3166_1: str
+
+@dataclass
+class P_companies:
+    name: str
+    company_id: int
+    
+@dataclass(frozen=True)
+class Movie_companies:
+    movie_id: int
+    company_id: int
+
